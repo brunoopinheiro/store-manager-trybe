@@ -7,7 +7,13 @@ chai.use(sinonChai);
 
 const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
-const { allProducts } = require('./mocks/productsController.mock');
+const {
+  allProducts,
+  wrongProductBody,
+  wrongSizeProductBody,
+  rightProductBody,
+  newProductMock,
+} = require('./mocks/productsController.mock');
 
 describe('Unit Tests for Products Controller', function () {
   describe('List all products', function () {
@@ -75,6 +81,62 @@ describe('Unit Tests for Products Controller', function () {
 
       expect(res.status).to.have.been.calledWith(404);
       expect(res.json).to.have.been.calledWith({ message: 'Product not found'});
+    });
+  });
+
+  describe('Creating a new product', function () {
+    it('Should create a new product with valid data', async function () {
+      const res = {};
+      const req = {
+        body: rightProductBody,
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'createProduct').resolves({
+        type: null,
+        message: newProductMock,
+      });
+
+      await productsController.createProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith(newProductMock);
+    });
+
+    it('Should return an error if the product name is too short', async function () {
+      const res = {};
+      const req = {
+        body: wrongSizeProductBody,
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'createProduct').resolves({
+        type: 'INVALID_VALUE',
+        message: '"name" must be at least 5 characters long',
+      });
+
+      await productsController.createProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(422);
+      expect(res.json).to.have.been.calledWith({ message: '"name" must be at least 5 characters long' });
+    });
+
+    it('Should return an error if the product does not have a name', async function () {
+      const res = {};
+      const req = {
+        body: wrongProductBody,
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'createProduct').resolves({
+        type: 'MISSING_FIELDS',
+        message: '"name" is required',
+      });
+
+      await productsController.createProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(400);
+      expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
     });
   });
 

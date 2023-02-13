@@ -15,6 +15,7 @@ const getById = async (productId) => {
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
+// product should be an object { name: 'string 5+ long' }
 const createProduct = async (product) => {
   const error = validateNewProduct(product);
   if (error.type) return error;
