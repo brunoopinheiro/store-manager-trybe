@@ -1,6 +1,6 @@
 const camelize = require('camelize');
-// const snakeize = require('snakeize');
 const connection = require('./connection');
+const createInsertArrays = require('../utils/createInsertArray');
 
 const getAll = async () => {
   const [result] = await connection.execute(
@@ -19,4 +19,15 @@ const getById = async (productId) => {
   return camelize(product);
 };
 
-module.exports = { getAll, getById };
+const insert = async (product) => {
+  const [columns, placeholders] = createInsertArrays(product);
+
+  const [{ insertId }] = await connection.execute(
+    `INSERT INTO products (${columns}) VALUES (${placeholders})`,
+    [...Object.values(product)],
+  );
+
+  return insertId;
+};
+
+module.exports = { getAll, getById, insert };

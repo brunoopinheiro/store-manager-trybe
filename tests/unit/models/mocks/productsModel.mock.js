@@ -4,6 +4,11 @@ const allProducts = [
   { id: 3, name: 'Escudo do Capitão América' },
 ];
 
+// const wrongProductBody = {};
+// const wrongSizeProductBody = {name:'Prod'};
+const rightProductBody = {name:'Produto1'};
+
 module.exports = {
   allProducts,
+  rightProductBody,
 };

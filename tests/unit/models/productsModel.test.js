@@ -1,13 +1,9 @@
-// Endpoint para listar produtos (/products) e (/products/:id)
-// Atraves de "/products" todos os produtos devem ser retornados
-// Atraves de "/products/:id" apenas o produto com id presente na URL deve ser retornado
-// Resultado nas listagens deve ser ORDENADO de forma crescente por ID
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { productsModel } = require('../../../src/models');
 
 const connection = require('../../../src/models/connection');
-const { allProducts } = require('./mocks/productsModel.mock');
+const { allProducts, rightProductBody } = require('./mocks/productsModel.mock');
 
 describe('Unit Tests for Products Model', function () {
   describe('Getting Products List', function () {
@@ -25,6 +21,16 @@ describe('Unit Tests for Products Model', function () {
       const result = await productsModel.getById(2);
 
       expect(result).to.be.deep.equal(allProducts[1]);
+    });
+  });
+
+  describe('Creating a new product', function () {
+        it('Should create a new product', async function () {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
+
+      const result = await productsModel.insert(rightProductBody);
+
+      expect(result).to.equal(42);
     });
   });
 
