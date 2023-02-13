@@ -1,6 +1,7 @@
 const camelize = require('camelize');
 const connection = require('./connection');
 const createInsertArrays = require('../utils/createInsertArray');
+const createUpdateArray = require('../utils/createUpdateArray');
 
 const getAll = async () => {
   const [result] = await connection.execute(
@@ -30,4 +31,13 @@ const insert = async (product) => {
   return insertId;
 };
 
-module.exports = { getAll, getById, insert };
+const updateById = async (productId, dataToUpdate) => {
+  const columns = createUpdateArray(dataToUpdate);
+
+  return connection.execute(
+    `UPDATE products SET ${columns} WHERE id = ?`,
+    [...Object.values(dataToUpdate), productId],
+  );
+};
+
+module.exports = { getAll, getById, insert, updateById };
