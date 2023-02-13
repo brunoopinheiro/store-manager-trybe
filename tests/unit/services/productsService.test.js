@@ -3,7 +3,11 @@ const sinon = require('sinon');
 const { productsService } = require('../../../src/services');
 const { productsModel } = require('../../../src/models');
 
-const { allProducts } = require('./mocks/products.service.mock');
+const {
+  allProducts,
+  wrongSizeProductBody,
+  rightProductBody,
+} = require('./mocks/products.service.mock');
 
 describe('Unit Tests for Products Service', function () {
   describe('Getting Products List', function () {
@@ -41,6 +45,25 @@ describe('Unit Tests for Products Service', function () {
 
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(allProducts[1]);
+    });
+  });
+
+  describe('Creating a new product', function () {
+    it('Should return an error when the product name is too short', async function () {
+      const result = await productsService.createProduct(wrongSizeProductBody);
+
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.equal('"name" length must be at least 5 characters long');
+    });
+
+    it('Should return the id of the new product', async function () {
+      sinon.stub(productsModel, 'insert').resolves(1);
+      sinon.stub(productsModel, 'getById').resolves(allProducts[0]);
+
+      const result = await productsService.createProduct(rightProductBody);
+
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(allProducts[0]);
     });
   });
 
