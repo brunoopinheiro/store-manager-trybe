@@ -58,7 +58,7 @@ describe('Unit Tests for Products Controller', function () {
       await productsController.getProduct(req, res);
 
       expect(res.status).to.have.been.calledWith(422);
-      expect(res.json).to.have.been.calledWith('"id" must be a number');
+      expect(res.json).to.have.been.calledWith({ message: '"id" must be a number'});
     });
     
     it('Should return an error if does not exist a product with the id', async function () {
@@ -74,7 +74,7 @@ describe('Unit Tests for Products Controller', function () {
       await productsController.getProduct(req, res);
 
       expect(res.status).to.have.been.calledWith(404);
-      expect(res.json).to.have.been.calledWith('Product not found');
+      expect(res.json).to.have.been.calledWith({ message: 'Product not found'});
     });
   });
 
