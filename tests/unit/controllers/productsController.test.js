@@ -14,6 +14,8 @@ const {
   rightProductBody,
   newProductMock,
   productUpdateBody,
+  filteredProducts,
+  noMatch,
 } = require('./mocks/productsController.mock');
 
 describe('Unit Tests for Products Controller', function () {
@@ -220,6 +222,56 @@ describe('Unit Tests for Products Controller', function () {
 
       expect(res.status).to.have.been.calledWith(404);
       expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+    });
+  });
+
+  describe('Searching products by name', function () {
+    it('Should return status 200 and the filtered list of products', async function () {
+      const res = {};
+      const req = { query: { q: 'Martelo' } };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'getByName').resolves({
+        type: null,
+        message: filteredProducts,
+      });
+
+      await productsController.getProductByName(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(filteredProducts);
+    });
+
+    it('Should return status 200 and the full list when the query is empty', async function () {
+      const res = {};
+      const req = { query: { q: '' } };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'getByName').resolves({
+        type: null,
+        message: allProducts,
+      });
+
+      await productsController.getProductByName(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(allProducts);
+    });
+
+    it('Should return status 200 and an empty array when there is no match', async function () {
+      const res = {};
+      const req = { query: { q: 'Trajestilador' } };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'getByName').resolves({
+        type: null,
+        message: noMatch,
+      });
+
+      await productsController.getProductByName(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(noMatch);
     });
   });
 

@@ -16,6 +16,13 @@ const getProduct = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const getProductByName = async (req, res) => {
+  const { q } = req.query;
+  const { message } = await productsService.getByName(q);
+
+  return res.status(200).json(message);
+};
+
 const createProduct = async (req, res) => {
   const { name } = req.body;
   if (!name) return res.status(400).json({ message: '"name" is required' });
@@ -54,4 +61,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductByName,
 };

@@ -67,7 +67,7 @@ describe('Unit Tests for Products Model', function () {
 
   describe('Searching a product by name', function () {
     it('Should return the correct list of products', async function () {
-      sinon.stub(connection, 'execute').resolves([[filteredProducts]]);
+      sinon.stub(connection, 'execute').resolves([filteredProducts]);
       const query = 'Martelo';
 
       const result = await productsModel.getByName(query);
@@ -76,7 +76,7 @@ describe('Unit Tests for Products Model', function () {
     });
 
     it('Should return the full list when the query is empty', async function () {
-      sinon.stub(connection, 'execute').resolves([[allProducts]]);
+      sinon.stub(connection, 'execute').resolves([allProducts]);
       const query = '';
 
       const result = await productsModel.getByName(query);
@@ -85,7 +85,7 @@ describe('Unit Tests for Products Model', function () {
     });
 
     it('Should return an empty array when there is no match', async function () {
-      sinon.stub(connection, 'execute').resolves([[noMatch]]);
+      sinon.stub(connection, 'execute').resolves([noMatch]);
       const query = 'Trajestilador';
 
       const result = await productsModel.getByName(query);

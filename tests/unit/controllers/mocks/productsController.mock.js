@@ -4,6 +4,12 @@ const allProducts = [
   { id: 3, name: 'Escudo do Capitão América' },
 ];
 
+const filteredProducts = [
+  { id: 1, name: 'Martelo de Thor' },
+];
+
+const noMatch = [];
+
 const wrongProductBody = {};
 const wrongSizeProductBody = { name: 'Prod' };
 const rightProductBody = { name: 'Produto1' };
@@ -18,4 +24,6 @@ module.exports = {
   rightProductBody,
   newProductMock,
   productUpdateBody,
+  filteredProducts,
+  noMatch,
 };

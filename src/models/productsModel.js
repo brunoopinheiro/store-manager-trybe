@@ -21,9 +21,10 @@ const getById = async (productId) => {
 };
 
 const getByName = async (productName) => {
-  const [[product]] = await connection.execute(
-    'SELECT * FROM products WHERE name LIKE "%?%"',
-    [productName],
+  const query = `%${productName}%`;
+  const [product] = await connection.execute(
+    'SELECT * FROM products WHERE name LIKE ?',
+    [query],
   );
 
   return camelize(product);
@@ -56,8 +57,6 @@ const deleteById = async (productId) => {
     'DELETE FROM products WHERE id = ?',
     [productId],
   );
-
-  console.log(result);
 
   return result;
 };

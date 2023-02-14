@@ -8,14 +8,9 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2023-02-13T18:46:37.318Z",
-    "modified": "2023-02-14T00:41:06.577Z",
+    "modified": "2023-02-14T13:48:15.147Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"name\": \"Mjolnir\"\n}",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -176,6 +171,86 @@
       "raw": "{\n  \"name\": \"Mjolnir\"\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "c4454ece-ce6c-401a-b60b-1caaa72f86c7",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:3000/search?q=Martelo",
+    "url": "localhost:3000/search?q=Martelo",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-02-14T13:47:50.055Z",
+    "modified": "2023-02-14T13:47:50.055Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "Martelo",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "2a040a4c-b453-416a-a718-4bceb3251c65",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:3000/products/search?q=Martelo",
+    "url": "localhost:3000/products/search?q=Martelo",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-02-14T13:48:08.841Z",
+    "modified": "2023-02-14T13:48:08.841Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "Martelo",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "d6a47c73-3ff8-4101-9b20-ff4b721a3d69",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:3000/products/search?q=Mar",
+    "url": "localhost:3000/products/search?q=Mar",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-02-14T13:48:44.637Z",
+    "modified": "2023-02-14T13:48:44.637Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "Mar",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "0d5aca91-d818-400f-9784-d86d39d66069",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:3000/products/search?q=",
+    "url": "localhost:3000/products/search?q=",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-02-14T13:54:06.488Z",
+    "modified": "2023-02-14T13:54:06.488Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "",
+        "isPath": false
+      }
+    ],
     "tests": []
   }
 ]
