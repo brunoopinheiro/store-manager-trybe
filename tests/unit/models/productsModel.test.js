@@ -9,6 +9,8 @@ const {
   productUpdateBody,
   productsUpdated,
   returnAfterDelete,
+  filteredProducts,
+  noMatch,
 } = require('./mocks/productsModel.mock');
 
 describe('Unit Tests for Products Model', function () {
@@ -60,6 +62,35 @@ describe('Unit Tests for Products Model', function () {
       const result = await productsModel.deleteById(productId);
 
       expect(result[0].affectedRows).to.be.deep.equal(1);
+    });
+  });
+
+  describe('Searching a product by name', function () {
+    it('Should return the correct list of products', async function () {
+      sinon.stub(connection, 'execute').resolves([[filteredProducts]]);
+      const query = 'Martelo';
+
+      const result = await productsModel.getByName(query);
+
+      expect(result).to.be.deep.equal(filteredProducts);
+    });
+
+    it('Should return the full list when the query is empty', async function () {
+      sinon.stub(connection, 'execute').resolves([[allProducts]]);
+      const query = '';
+
+      const result = await productsModel.getByName(query);
+
+      expect(result).to.be.deep.equal(allProducts);
+    });
+
+    it('Should return an empty array when there is no match', async function () {
+      sinon.stub(connection, 'execute').resolves([[noMatch]]);
+      const query = 'Trajestilador';
+
+      const result = await productsModel.getByName(query);
+
+      expect(result).to.be.deep.equal(noMatch);
     });
   });
 

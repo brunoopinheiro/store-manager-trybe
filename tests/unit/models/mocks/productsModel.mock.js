@@ -4,6 +4,12 @@ const allProducts = [
   { id: 3, name: 'Escudo do Capitão América' },
 ];
 
+const filteredProducts = [
+  { id: 1, name: 'Martelo de Thor' },
+];
+
+const noMatch = [];
+
 const returnAfterDelete = [
   {
     fieldCount: 0,
@@ -39,4 +45,6 @@ module.exports = {
   productUpdateBody,
   productsUpdated,
   returnAfterDelete,
+  filteredProducts,
+  noMatch,
 };

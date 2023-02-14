@@ -20,6 +20,15 @@ const getById = async (productId) => {
   return camelize(product);
 };
 
+const getByName = async (productName) => {
+  const [[product]] = await connection.execute(
+    'SELECT * FROM products WHERE name LIKE "%?%"',
+    [productName],
+  );
+
+  return camelize(product);
+};
+
 const insert = async (product) => {
   const [columns, placeholders] = createInsertArrays(product);
 
@@ -53,4 +62,4 @@ const deleteById = async (productId) => {
   return result;
 };
 
-module.exports = { getAll, getById, insert, updateById, deleteById };
+module.exports = { getAll, getById, insert, updateById, deleteById, getByName };
