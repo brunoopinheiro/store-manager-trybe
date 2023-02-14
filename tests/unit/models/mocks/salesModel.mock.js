@@ -3,10 +3,6 @@ const allSales = [
   { id: 2, date: '2023-02-14 14:17:27' },
 ];
 
-const correctSaleRequest = [
-  { productId: 1, quantity: 1 },
-  { productId: 2, quantity: 5 },
-];
 const wrongSaleNotProductIdBody = [{ quantity: 1 }];
 const wrongSaleNotQuantityBody = [{ productId:1 }];
 const wrongZeroQuantityBody = [{ productId: 1, quantity: 0 }];
@@ -27,7 +23,6 @@ const saleCreateResponse = {
 };
 
 module.exports = {
-  correctSaleRequest,
   wrongSaleNotProductIdBody,
   wrongSaleNotQuantityBody,
   wrongZeroQuantityBody,
