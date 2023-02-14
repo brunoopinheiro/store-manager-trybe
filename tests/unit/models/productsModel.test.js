@@ -8,6 +8,7 @@ const {
   rightProductBody,
   productUpdateBody,
   productsUpdated,
+  returnAfterDelete,
 } = require('./mocks/productsModel.mock');
 
 describe('Unit Tests for Products Model', function () {
@@ -48,7 +49,18 @@ describe('Unit Tests for Products Model', function () {
 
       expect(result[0].affectedRows).to.be.deep.equal(1);
       expect(result[0].changedRows).to.be.deep.equal(1);
-    })
+    });
+  });
+
+  describe('Deleting a product', function () {
+    it('Should delete an existing product', async function () {
+      sinon.stub(connection, 'execute').resolves(returnAfterDelete);
+      const productId = 3;
+
+      const result = await productsModel.deleteById(productId);
+
+      expect(result[0].affectedRows).to.be.deep.equal(1);
+    });
   });
 
   afterEach(function () {

@@ -34,10 +34,23 @@ const insert = async (product) => {
 const updateById = async (productId, dataToUpdate) => {
   const columns = createUpdateArray(dataToUpdate);
 
-  return connection.execute(
+  const result = await connection.execute(
     `UPDATE products SET ${columns} WHERE id = ?`,
     [...Object.values(dataToUpdate), productId],
   );
+
+  return result;
 };
 
-module.exports = { getAll, getById, insert, updateById };
+const deleteById = async (productId) => {
+  const result = await connection.execute(
+    'DELETE FROM products WHERE id = ?',
+    [productId],
+  );
+
+  console.log(result);
+
+  return result;
+};
+
+module.exports = { getAll, getById, insert, updateById, deleteById };

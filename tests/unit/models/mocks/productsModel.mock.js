@@ -4,6 +4,18 @@ const allProducts = [
   { id: 3, name: 'Escudo do Capitão América' },
 ];
 
+const returnAfterDelete = [
+  {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+  },
+  undefined,
+];
+
 const rightProductBody = { name: 'Produto1' };
 
 const productUpdateBody = { name: 'Machado do Thor Stormbreaker' };
@@ -26,4 +38,5 @@ module.exports = {
   rightProductBody,
   productUpdateBody,
   productsUpdated,
+  returnAfterDelete,
 };
