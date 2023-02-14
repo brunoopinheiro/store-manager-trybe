@@ -7,6 +7,7 @@ const {
   allProducts,
   wrongSizeProductBody,
   rightProductBody,
+  productUpdateBody,
 } = require('./mocks/products.service.mock');
 
 describe('Unit Tests for Products Service', function () {
@@ -64,6 +65,44 @@ describe('Unit Tests for Products Service', function () {
 
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(allProducts[0]);
+    });
+  });
+
+  describe('Updating a product', function () {
+    it('Should return an error when the id is not from a product', async function () {
+      sinon.stub(productsModel, 'getById').resolves(undefined);
+
+      const error = await productsService.updateProduct(99999, productUpdateBody);
+
+      expect(error.type).to.equal('PRODUCT_NOT_FOUND');
+      expect(error.message).to.equal('Product not found');
+    });
+
+    it('Should return an error if the Id is invalid', async function () {
+      const result = await productsService.updateProduct('um', productUpdateBody);
+
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.equal('"id" must be a number');
+    });
+
+    it('Should return an error when the product name is too short', async function () {
+      const result = await productsService.updateProduct(1, wrongSizeProductBody);
+
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.equal('"name" length must be at least 5 characters long');
+    });
+
+    it('Should update the product', async function () {
+      sinon.stub(productsModel, 'updateById').resolves(true);
+      sinon.stub(productsModel, 'getById').resolves({ id: 1, ...productUpdateBody });
+      
+      const product = await productsService.updateProduct(1, productUpdateBody);
+
+      expect(product.type).to.be.equal(null);
+      expect(product.message).to.be.deep.equal({
+        id: 1,
+        ...productUpdateBody,
+      });
     });
   });
 

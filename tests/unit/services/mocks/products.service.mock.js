@@ -7,8 +7,11 @@ const allProducts = [
 const wrongSizeProductBody = { name: 'Prod' };
 const rightProductBody = { name: 'Produto1' };
 
+const productUpdateBody = { name: 'Machado do Thor Stormbreaker' };
+
 module.exports = {
   allProducts,
   wrongSizeProductBody,
   rightProductBody,
+  productUpdateBody,
 };
