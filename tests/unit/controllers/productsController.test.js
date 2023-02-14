@@ -13,6 +13,7 @@ const {
   wrongSizeProductBody,
   rightProductBody,
   newProductMock,
+  productUpdateBody,
 } = require('./mocks/productsController.mock');
 
 describe('Unit Tests for Products Controller', function () {
@@ -134,6 +135,58 @@ describe('Unit Tests for Products Controller', function () {
       });
 
       await productsController.createProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(400);
+      expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
+    });
+  });
+
+  describe('Updating a product', function () {
+    it('Should update an existing product', async function () {
+      const res = {};
+      const req = { params: { id: 1 }, body: productUpdateBody };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'updateProduct')
+        .resolves({ type: null, message: { id: 1, ...productUpdateBody } });
+      
+      await productsController.updateProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith({
+        id: 1,
+        ...productUpdateBody,
+      });
+    });
+
+    it('Should return an error if the Id is not valid', async function () {
+      const res = {};
+      const req = { params: { id: 1 }, body: productUpdateBody };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'updateProduct')
+        .resolves({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+      
+      await productsController.updateProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+    });
+
+    it('Should return an error if the product does not have a name', async function () {
+      const res = {};
+      const req = {
+        params: { id: 1 },
+        body: wrongProductBody,
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'updateProduct').resolves({
+        type: 'MISSING_FIELDS',
+        message: '"name" is required',
+      });
+
+      await productsController.updateProduct(req, res);
 
       expect(res.status).to.have.been.calledWith(400);
       expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
