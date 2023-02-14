@@ -9,9 +9,17 @@ const rightProductBody = { name: 'Produto1' };
 
 const productUpdateBody = { name: 'Machado do Thor Stormbreaker' };
 
+const filteredProducts = [
+  { id: 1, name: 'Martelo de Thor' },
+];
+
+const noMatch = [];
+
 module.exports = {
   allProducts,
   wrongSizeProductBody,
   rightProductBody,
   productUpdateBody,
+  filteredProducts,
+  noMatch,
 };

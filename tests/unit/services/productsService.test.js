@@ -8,6 +8,8 @@ const {
   wrongSizeProductBody,
   rightProductBody,
   productUpdateBody,
+  filteredProducts,
+  noMatch,
 } = require('./mocks/products.service.mock');
 
 describe('Unit Tests for Products Service', function () {
@@ -46,6 +48,38 @@ describe('Unit Tests for Products Service', function () {
 
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(allProducts[1]);
+    });
+  });
+
+  describe('Searching products by its name', function () {
+    it('Should return the correct products by its name', async function () {
+      sinon.stub(productsModel, 'getByName').resolves(filteredProducts);
+      const query = 'Martelo';
+
+      const result = await productsService.getByName(query);
+
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(filteredProducts);
+    });
+
+    it('Should return the full list when the query is empty', async function () {
+      sinon.stub(productsModel, 'getByName').resolves(allProducts);
+      const query = '';
+
+      const result = await productsService.getByName(query);
+
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(allProducts);
+    });
+
+    it('Should return an empty array when there is no match', async function () {
+      sinon.stub(productsModel, 'getByName').resolves(noMatch);
+      const query = 'Trajestilador';
+
+      const result = await productsService.getByName(query);
+
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(noMatch);
     });
   });
 
