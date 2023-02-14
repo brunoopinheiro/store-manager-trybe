@@ -106,6 +106,32 @@ describe('Unit Tests for Products Service', function () {
     });
   });
 
+  describe('Deleting a product', function () {
+    it('Should return an error when the id is not from a product', async function () {
+      sinon.stub(productsModel, 'getById').resolves(undefined);
+
+      const error = await productsService.deleteProduct(99999);
+
+      expect(error.type).to.equal('PRODUCT_NOT_FOUND');
+      expect(error.message).to.equal('Product not found');
+    });
+
+    it('Should return an error if the Id is invalid', async function () {
+      const error = await productsService.deleteProduct('um', productUpdateBody);
+
+      expect(error.type).to.equal('INVALID_VALUE');
+      expect(error.message).to.equal('"id" must be a number');
+    });
+
+    it('Should succesfully delete a product', async function () {
+      sinon.stub(productsModel, 'deleteById').resolves(true);
+
+      const result = await productsService.deleteProduct(3);
+
+      expect(result.type).to.be.equal(null);
+    });
+  });
+
   afterEach(function () {
     sinon.restore();
   });
