@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { salesProductsModel } = require('../../../src/models');
 
 const connection = require('../../../src/models/connection');
-const { allEntries, saleObject } = require('./mocks/salesProductsModel.mock');
+const { allEntries, saleObject, returnAfterDelete } = require('./mocks/salesProductsModel.mock');
 
 describe('Unit Tests: Sales_Products Model', function () {
   describe('List Sales_Products entries', function () {
@@ -23,6 +23,16 @@ describe('Unit Tests: Sales_Products Model', function () {
       const result = await salesProductsModel.insert(saleObject);
 
       expect(result).to.be.equal(10);
+    });
+  });
+
+  describe('Deleting entries', function () {
+    it('Should delete an existing set of entries', async function () {
+      sinon.stub(connection, 'execute').resolves(returnAfterDelete);
+
+      const result = await salesProductsModel.deleteBySaleId(1);
+
+      expect(result[0].affectedRows).to.be.deep.equal(2);
     });
   });
   afterEach(function () {

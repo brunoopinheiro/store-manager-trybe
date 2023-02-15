@@ -21,7 +21,17 @@ const insert = async (saleObject) => {
   return insertId;
 };
 
+const deleteBySaleId = async (saleId) => {
+  const result = await connection.execute(
+    'DELETE FROM sales_products WHERE id = ?',
+    [saleId],
+  );
+
+  return result;
+};
+
 module.exports = {
   getAll,
   insert,
+  deleteBySaleId,
 };

@@ -15,8 +15,21 @@ const saleObject = {
   quantity: 6,
 };
 
+const returnAfterDelete = [
+  {
+    fieldCount: 0,
+    affectedRows: 2,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+  },
+  undefined,
+];
+
 module.exports = {
   correctSaleRequest,
   allEntries,
   saleObject,
+  returnAfterDelete,
 };
