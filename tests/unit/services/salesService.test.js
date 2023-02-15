@@ -42,7 +42,7 @@ describe('Unit Tests: Sales Service', function () {
       const result = await salesService.createSale(nonexistentProductIdBody);
 
       expect(result.type).to.equal('PRODUCT_NOT_FOUND');
-      expect(result.message).to.deep.equal('Product Not Found');
+      expect(result.message).to.deep.equal('Product not found');
     });
 
     it('Should return an error if some product is not valid', async function () {
@@ -53,7 +53,7 @@ describe('Unit Tests: Sales Service', function () {
       const result = await salesService.createSale(nonexistentProductIdBody2);
 
       expect(result.type).to.equal('PRODUCT_NOT_FOUND');
-      expect(result.message).to.deep.equal('Product Not Found');
+      expect(result.message).to.deep.equal('Product not found');
       
     });
 

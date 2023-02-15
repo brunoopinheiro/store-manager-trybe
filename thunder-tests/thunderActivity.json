@@ -8,9 +8,14 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2023-02-13T18:46:37.318Z",
-    "modified": "2023-02-14T13:48:15.147Z",
+    "modified": "2023-02-15T03:14:18.196Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 1\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 5\n  }\n]",
+      "form": []
+    },
     "tests": []
   },
   {
@@ -251,6 +256,25 @@
         "isPath": false
       }
     ],
+    "tests": []
+  },
+  {
+    "_id": "0dda8d2b-d06d-4da9-ae79-6bc3529d18bd",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:3000/sales",
+    "url": "localhost:3000/sales",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-02-15T01:14:50.338Z",
+    "modified": "2023-02-15T02:13:55.066Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 1\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 5\n  }\n]",
+      "form": []
+    },
     "tests": []
   }
 ]

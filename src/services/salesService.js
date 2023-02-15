@@ -1,4 +1,4 @@
-const { productsModel, salesModel, salesProductModel } = require('../models');
+const { productsModel, salesModel, salesProductsModel } = require('../models');
 const { validateSale } = require('./validations/validateInputValues');
 
 const validateProducts = async (saleArray) => {
@@ -18,16 +18,12 @@ const createSale = async (saleArray) => {
   if (error.type) return error;
 
   const validProducts = await validateProducts(saleArray);
-  if (!validProducts) return { type: 'PRODUCT_NOT_FOUND', message: 'Product Not Found' };
+  if (!validProducts) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 
-  // Cadastra nova sale
   const saleId = await salesModel.insert();
-  // usa saleId para criar array de inserções na tabela relacional
-  const salesObjectArray = saleArray.map((saleProduct) => ({ saleId, ...saleProduct }));
-  // insere no banco relacional
-  salesObjectArray.forEach(async (saleObj) => {
-    await salesProductModel.insert(saleObj);
-  });
+  await Promise.all(saleArray.forEach(async (saleObj) => {
+    await salesProductsModel.insert({ saleId, ...saleObj });
+  }));
 
   return {
     type: null,

@@ -19,11 +19,8 @@ const getById = async (saleId) => {
 };
 
 const insert = async () => {
-  const date = new Date().toISOString();
-
   const [{ insertId }] = await connection.execute(
-    'INSERT INTO sales (date) VALUES (?)',
-    [date],
+    'INSERT INTO sales (date) VALUES (NOW())',
   );
 
   return insertId;
