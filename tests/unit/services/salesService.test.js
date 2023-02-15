@@ -119,6 +119,26 @@ describe('Unit Tests: Sales Service', function () {
     })
   });
 
+  describe('Deleting a sale', function () {
+    it('Should return an error when the id is not from a sale', async function () {
+      sinon.stub(salesModel, 'getById').resolves([]);
+
+      const error = await salesService.deleteSale(9999);
+
+      expect(error.type).to.equal('SALE_NOT_FOUND');
+      expect(error.message).to.equal('Sale not found');
+    });
+
+    it('Should successfully delete a sale', async function () {
+      sinon.stub(salesModel, 'getById').resolves(saleById);
+      sinon.stub(salesModel, 'deleteById').resolves(true);
+
+      const result = await salesService.deleteSale(1);
+
+      expect(result.type).to.be.equal(null);
+    });
+  });
+
   afterEach(function () {
     sinon.restore();
   });
