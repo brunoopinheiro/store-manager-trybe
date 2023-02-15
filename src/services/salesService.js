@@ -34,6 +34,19 @@ const createSale = async (saleArray) => {
   };
 };
 
+const getAll = async () => {
+  const sales = await salesModel.getAll();
+  return { type: null, message: sales };
+};
+
+const getById = async (saleId) => {
+  const sale = await salesModel.getById(saleId);
+  if (sale) return { type: null, message: sale };
+  return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+};
+
 module.exports = {
   createSale,
+  getAll,
+  getById,
 };

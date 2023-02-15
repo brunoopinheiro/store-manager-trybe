@@ -13,6 +13,8 @@ const {
   wrongZeroNegativeBody,
   nonexistentProductIdBody,
   nonexistentProductIdBody2,
+  allSales,
+  saleById,
 } = require('./mocks/salesService.mock');
 
 describe('Unit Tests: Sales Service', function () {
@@ -84,6 +86,37 @@ describe('Unit Tests: Sales Service', function () {
       expect(result.type).to.equal('INVALID_VALUE');
       expect(result.message).to.equal('"quantity" must be greater than or equal to 1');
     });
+  });
+
+  describe('Listing all sales', function () {
+    it('Should list the full list of sales', async function () {
+      sinon.stub(salesModel, 'getAll').resolves(allSales);
+
+      const result = await salesService.getAll();
+
+      expect(result.type).to.be.equal(null);
+      expect(result.message).to.be.deep.equal(allSales);
+    });
+  });
+
+  describe('Listing sales by id', function () {
+    it('Should return the list of sales', async function () {
+      sinon.stub(salesModel, 'getById').resolves(saleById);
+
+      const result = await salesService.getById(1);
+
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(saleById);
+    });
+
+    it('Should return an error if the id does not exist', async function () {
+      sinon.stub(salesModel, 'getById').resolves(undefined);
+
+      const result = await salesService.getById(2112);
+
+      expect(result.type).to.equal('SALE_NOT_FOUND');
+      expect(result.message).to.equal('Sale not found');
+    })
   });
 
   afterEach(function () {
