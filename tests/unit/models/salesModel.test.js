@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { salesModel } = require('../../../src/models');
 
 const connection = require('../../../src/models/connection');
-const { allSales, saleById } = require('./mocks/salesModel.mock');
+const { allSales, saleById, returnAfterDelete } = require('./mocks/salesModel.mock');
 
 describe('Unit Tests: Sales Model', function () {
   describe('Crete new sale', function () {
@@ -31,6 +31,16 @@ describe('Unit Tests: Sales Model', function () {
       const result = await salesModel.getById(1);
 
       expect(result).to.be.deep.equal(saleById);
+    });
+  });
+
+  describe('Deleting a sale', function () {
+    it('Should delete an existing sale', async function () {
+      sinon.stub(connection, 'execute').resolves(returnAfterDelete);
+
+      const result = await salesModel.deleteById(3);
+
+      expect(result[0].affectedRows).to.be.deep.equal(1);
     });
   });
 

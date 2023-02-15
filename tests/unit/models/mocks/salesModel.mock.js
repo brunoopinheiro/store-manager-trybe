@@ -52,8 +52,21 @@ const saleCreateResponse = {
   ],
 };
 
+const returnAfterDelete = [
+  {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+  },
+  undefined,
+];
+
 module.exports = {
   saleCreateResponse,
   allSales,
   saleById,
+  returnAfterDelete,
 };
