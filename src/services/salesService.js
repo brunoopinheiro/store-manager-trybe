@@ -24,7 +24,7 @@ const createSale = async (saleArray) => {
   saleArray.forEach(async (saleObj) => {
     await salesProductsModel.insert({ saleId, ...saleObj });
   });
-
+  // Test
   return {
     type: null,
     message: {
