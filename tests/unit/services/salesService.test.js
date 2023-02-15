@@ -110,7 +110,7 @@ describe('Unit Tests: Sales Service', function () {
     });
 
     it('Should return an error if the id does not exist', async function () {
-      sinon.stub(salesModel, 'getById').resolves(undefined);
+      sinon.stub(salesModel, 'getById').resolves([]);
 
       const result = await salesService.getById(2112);
 

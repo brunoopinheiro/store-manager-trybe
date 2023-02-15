@@ -41,7 +41,7 @@ const getAll = async () => {
 
 const getById = async (saleId) => {
   const sale = await salesModel.getById(saleId);
-  if (sale) return { type: null, message: sale };
+  if (sale.length !== 0) return { type: null, message: sale };
   return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
 };
 

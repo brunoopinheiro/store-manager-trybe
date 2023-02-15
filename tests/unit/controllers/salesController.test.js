@@ -16,6 +16,8 @@ const {
   wrongZeroNegativeBody,
   nonexistentProductIdBody,
   nonexistentProductIdBody2,
+  allSales,
+  saleById,
 } = require('./mocks/salesController.mock');
 
 describe('Unit Tests: Sales Controller', function () {
@@ -130,6 +132,58 @@ describe('Unit Tests: Sales Controller', function () {
 
       expect(res.status).to.have.been.calledWith(404);
       expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+    });
+  });
+
+  describe('List all sales', function () {
+    it('Should return status 200 and the full list of sales', async function () {
+      const res = {};
+      const req = {};
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesService, 'getAll').resolves({
+        type: null,
+        message: allSales,
+      });
+
+      await salesController.listSales(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(allSales);
+    });
+  });
+
+  describe('Listing a sale by id', function () {
+    it('Should return status 200 and the sale', async function () {
+      const res = {};
+      const req = { params: { id: 1 } };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesService, 'getById').resolves({
+        type: null,
+        message: saleById,
+      });
+
+      await salesController.getSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(saleById);
+    });
+
+    it('Should return status 404 and an error if the id does not exist', async function () {
+      const res = {};
+      const req = { params: { id: 2112 } };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesService, 'getById').resolves({
+        type: 'SALE_NOT_FOUND',
+        message: 'Sale not found',
+      });
+
+      await salesController.getSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
     });
   });
 
