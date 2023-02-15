@@ -33,6 +33,28 @@ describe('Unit Tests: Sales Service', function () {
       expect(result.message).to.deep.equal(saleUpdatedResponse);
     });
 
+    it('Should return an error if the productId is not valid', async function () {
+      sinon.stub(salesModel, 'getById').resolves(saleById);
+      sinon.stub(productsModel, 'getById').resolves(undefined);
+
+      const result = await salesService.updateSale(1, updateRequest);
+
+      expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+      expect(result.message).to.deep.equal('Product not found');
+    });
+
+    it('Should return an error if some productId is not valid', async function () {
+      sinon.stub(salesModel, 'getById').resolves(saleById);
+      sinon.stub(productsModel, 'getById')
+        .onFirstCall().resolves(productsModelMockReturn)
+        .onSecondCall().resolves(undefined);
+
+      const result = await salesService.updateSale(1, updateRequest);
+
+      expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+      expect(result.message).to.deep.equal('Product not found');
+    });
+
     it('Should return an error if the saleId is not valid', async function () {
       sinon.stub(salesModel, 'getById').resolves([]);
 
