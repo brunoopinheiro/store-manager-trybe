@@ -60,6 +60,9 @@ const updateSale = async (saleId, saleArray) => {
   if (error.type) {
     return error;
   }
+
+  const validProducts = await validateProducts(saleArray);
+  if (!validProducts) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   
   await salesProductsModel.deleteBySaleId(saleId);
   saleArray.forEach(async (saleObj) => {
