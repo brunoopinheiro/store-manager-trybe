@@ -187,6 +187,38 @@ describe('Unit Tests: Sales Controller', function () {
     });
   });
 
+  describe('Deleting a sale', function () {
+    it('Should return status 204 and delete a sale by its id', async function () {
+      const res = {};
+      const req = { params: { id: 1 } };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesService, 'deleteSale').resolves({
+        type: null,
+      });
+
+      await salesController.deleteSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+    });
+
+    it('Should return status 404 and an error if the id is not valid', async function () {
+      const res = {};
+      const req = { params: { id: 9999 } };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesService, 'deleteSale').resolves({
+        type: 'SALE_NOT_FOUND',
+        message: 'Sale not found',
+      });
+
+      await salesController.deleteSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+    });
+  });
+
   afterEach(function () {
     sinon.restore();
   });
