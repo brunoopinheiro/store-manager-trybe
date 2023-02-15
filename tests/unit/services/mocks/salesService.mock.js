@@ -72,6 +72,19 @@ const saleById = [
   },
 ];
 
+const saleUpdatedResponse = {
+  saleId: 1,
+  itemsUpdated: [
+    { productId: 1, quantity: 10 },
+    { productId: 2, quantity: 55 },
+  ],
+};
+
+const updateRequest = [
+  { productId: 1, quantity: 10 },
+  { productId: 2, quantity: 55 },
+];
+
 module.exports = {
   saleCreatedResponse,
   correctSaleRequest,
@@ -84,4 +97,6 @@ module.exports = {
   nonexistentProductIdBody2,
   allSales,
   saleById,
+  saleUpdatedResponse,
+  updateRequest,
 };

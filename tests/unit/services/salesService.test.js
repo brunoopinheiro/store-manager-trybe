@@ -15,9 +15,33 @@ const {
   nonexistentProductIdBody2,
   allSales,
   saleById,
+  saleUpdatedResponse,
+  updateRequest,
 } = require('./mocks/salesService.mock');
 
 describe('Unit Tests: Sales Service', function () {
+  describe('Updating a sales', function () {
+    it('Should update a valid sale', async function () {
+      sinon.stub(salesModel, 'getById').resolves(saleById);
+      sinon.stub(productsModel, 'getById').onFirstCall().resolves(productsModelMockReturn).onSecondCall().resolves(productsModelMockReturn);
+      sinon.stub(salesProductsModel, 'deleteBySaleId').resolves({ affectedRows: 2 });
+      sinon.stub(salesProductsModel, 'insert').onFirstCall().resolves(1).onSecondCall().resolves(2);
+
+      const result = await salesService.updateSale(1, updateRequest);
+
+      expect(result.type).to.be.equal(null);
+      expect(result.message).to.deep.equal(saleUpdatedResponse);
+    });
+
+    it('Should return an error if the saleId is not valid', async function () {
+      sinon.stub(salesModel, 'getById').resolves([]);
+
+      const result = await salesService.updateSale(9999, updateRequest);
+
+      expect(result.type).to.be.equal('SALE_NOT_FOUND');
+      expect(result.message).to.deep.equal('Sale not found');
+    });
+  });
   describe('Create a new sale', function () {
     it('Should create a new sale', async function () {
       sinon.stub(salesModel, 'insert').resolves(3);

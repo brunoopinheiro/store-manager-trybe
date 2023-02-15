@@ -55,9 +55,30 @@ const deleteSale = async (saleId) => {
   return { type: null };
 };
 
+const updateSale = async (saleId, saleArray) => { 
+  const error = await getById(saleId);
+  if (error.type) {
+    return error;
+  }
+  
+  await salesProductsModel.deleteBySaleId(saleId);
+  saleArray.forEach(async (saleObj) => {
+    await salesProductsModel.insert({ saleId, ...saleObj });
+  });
+
+  return {
+    type: null,
+    message: {
+      saleId,
+      itemsUpdated: saleArray,
+    },
+  };
+};
+
 module.exports = {
   createSale,
   getAll,
   getById,
   deleteSale,
+  updateSale,
 };
