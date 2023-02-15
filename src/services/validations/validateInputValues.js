@@ -1,4 +1,4 @@
-const { idSchema, addProductSchema, saleRequisitionSchema } = require('./schema');
+const { idSchema, addProductSchema, addSaleSchema } = require('./schema');
 
 const validateId = (id) => {
   const { error } = idSchema.validate(id);
@@ -17,11 +17,19 @@ const validateNewProduct = (product) => {
 };
 
 const validateSale = (saleArray) => {
-  const { error } = saleRequisitionSchema.validate(saleArray);
+  let errorType = null;
+  let errorMessage = '';
 
-  if (error) return { type: error.type, message: error.message };
+  saleArray.forEach((saleObj) => {
+    const { error } = addSaleSchema.validate(saleObj);
+  
+    if (error) {
+      errorType = error.message.includes('required') ? 'MISSING_FIELDS' : 'INVALID_VALUE';
+      errorMessage = error.message;
+    }
+  });
 
-  return { type: null, message: '' };
+  return { type: errorType, message: errorMessage };
 };
 
 module.exports = {

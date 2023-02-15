@@ -3,7 +3,17 @@ const sinon = require('sinon');
 const { salesService } = require('../../../src/services');
 const { salesModel, salesProductsModel, productsModel } = require('../../../src/models');
 
-const { correctSaleRequest, saleCreatedResponse, productsModelMockReturn } = require('./mocks/salesService.mock');
+const {
+  correctSaleRequest,
+  saleCreatedResponse,
+  productsModelMockReturn,
+  wrongSaleNotProductIdBody,
+  wrongSaleNotQuantityBody,
+  wrongZeroQuantityBody,
+  wrongZeroNegativeBody,
+  nonexistentProductIdBody,
+  nonexistentProductIdBody2,
+} = require('./mocks/salesService.mock');
 
 describe('Unit Tests: Sales Service', function () {
   describe('Create a new sale', function () {
@@ -24,6 +34,55 @@ describe('Unit Tests: Sales Service', function () {
 
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(saleCreatedResponse);
+    });
+
+    it('Should return an error if the product is not valid', async function () {
+      sinon.stub(productsModel, 'getById').resolves(undefined);
+
+      const result = await salesService.createSale(nonexistentProductIdBody);
+
+      expect(result.type).to.equal('PRODUCT_NOT_FOUND');
+      expect(result.message).to.deep.equal('Product Not Found');
+    });
+
+    it('Should return an error if some product is not valid', async function () {
+      sinon.stub(productsModel, 'getById')
+        .onFirstCall().resolves(productsModelMockReturn)
+        .onSecondCall().resolves(undefined);
+      
+      const result = await salesService.createSale(nonexistentProductIdBody2);
+
+      expect(result.type).to.equal('PRODUCT_NOT_FOUND');
+      expect(result.message).to.deep.equal('Product Not Found');
+      
+    });
+
+    it('Should return an error if the productId is missing', async function () {
+      const result = await salesService.createSale(wrongSaleNotProductIdBody);
+
+      expect(result.type).to.equal('MISSING_FIELDS');
+      expect(result.message).to.equal('"productId" is required');
+    });
+
+    it('Should return an error if the quantity is missing', async function () {
+      const result = await salesService.createSale(wrongSaleNotQuantityBody);
+
+      expect(result.type).to.equal('MISSING_FIELDS');
+      expect(result.message).to.equal('"quantity" is required');
+    });
+
+    it('Should return an error if the quantity is zero or lesser', async function () {
+      const result = await salesService.createSale(wrongZeroQuantityBody);
+
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.equal('"quantity" must be greater than or equal to 1');
+    });
+
+    it('Should return an error if the quentity is a negative integer', async function () {
+      const result = await salesService.createSale(wrongZeroNegativeBody);
+
+      expect(result.type).to.equal('INVALID_VALUE');
+      expect(result.message).to.equal('"quantity" must be greater than or equal to 1');
     });
   });
 
