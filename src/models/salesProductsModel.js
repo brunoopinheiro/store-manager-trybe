@@ -23,7 +23,7 @@ const insert = async (saleObject) => {
 
 const deleteBySaleId = async (saleId) => {
   const result = await connection.execute(
-    'DELETE FROM sales_products WHERE id = ?',
+    'DELETE FROM sales_products WHERE sale_id = ?',
     [saleId],
   );
 

@@ -18,6 +18,8 @@ const {
   nonexistentProductIdBody2,
   allSales,
   saleById,
+  saleUpdatedResponse,
+  updateRequest,
 } = require('./mocks/salesController.mock');
 
 describe('Unit Tests: Sales Controller', function () {
@@ -213,6 +215,40 @@ describe('Unit Tests: Sales Controller', function () {
       });
 
       await salesController.deleteSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+    });
+  });
+
+  describe('Updating a sale', function () {
+    it('Should update an existing sale', async function () {
+      const res = {};
+      const req = { params: { id: 1 }, body: updateRequest };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesService, 'updateSale').resolves({
+        type: null,
+        message: saleUpdatedResponse,
+      });
+
+      await salesController.updateSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(saleUpdatedResponse);
+    });
+
+    it('Should return an error if the saleId is not valid', async function () {
+      const res = {};
+      const req = { params: { id: 9999 }, body: updateRequest };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesService, 'updateSale').resolves({
+        type: 'SALE_NOT_FOUND',
+        message: 'Sale not found',
+      });
+
+      await salesController.updateSale(req, res);
 
       expect(res.status).to.have.been.calledWith(404);
       expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });

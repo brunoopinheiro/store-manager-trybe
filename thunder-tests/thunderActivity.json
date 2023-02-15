@@ -267,12 +267,12 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2023-02-15T01:14:50.338Z",
-    "modified": "2023-02-15T02:13:55.066Z",
+    "modified": "2023-02-15T15:22:03.244Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 1\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 5\n  }\n]",
+      "raw": "[\n  {\n    \"productId\": 2,\n    \"quantity\": 30\n  },\n  {\n    \"productId\": 3,\n    \"quantity\": 50\n  }\n]",
       "form": []
     },
     "tests": []
@@ -286,12 +286,12 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2023-02-15T13:22:58.877Z",
-    "modified": "2023-02-15T13:34:00.640Z",
+    "modified": "2023-02-15T15:23:26.712Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 1\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 5\n  }\n]",
+      "raw": "[\n  {\n    \"productId\": 2,\n    \"quantity\": 33\n  },\n  {\n    \"productId\": 3,\n    \"quantity\": 55\n  }\n]",
       "form": []
     },
     "tests": []
@@ -358,6 +358,44 @@
     "body": {
       "type": "json",
       "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 1\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 5\n  }\n]",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "0e4d3e50-7f32-4ef4-ab2e-89a84e806638",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:3000/sales/3",
+    "url": "localhost:3000/sales/3",
+    "method": "PUT",
+    "sortNum": 0,
+    "created": "2023-02-15T15:22:24.869Z",
+    "modified": "2023-02-15T15:22:24.869Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "[\n  {\n    \"productId\": 2,\n    \"quantity\": 33\n  },\n  {\n    \"productId\": 3,\n    \"quantity\": 55\n  }\n]",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "0ed27033-638a-4134-a3d8-b298b18bc101",
+    "colId": "history",
+    "containerId": "",
+    "name": "localhost:3000/sales/3",
+    "url": "localhost:3000/sales/3",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-02-15T15:23:20.167Z",
+    "modified": "2023-02-15T15:23:20.167Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "[\n  {\n    \"productId\": 2,\n    \"quantity\": 33\n  },\n  {\n    \"productId\": 3,\n    \"quantity\": 55\n  }\n]",
       "form": []
     },
     "tests": []
