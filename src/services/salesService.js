@@ -21,9 +21,9 @@ const createSale = async (saleArray) => {
   if (!validProducts) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 
   const saleId = await salesModel.insert();
-  await Promise.all(saleArray.forEach(async (saleObj) => {
+  saleArray.forEach(async (saleObj) => {
     await salesProductsModel.insert({ saleId, ...saleObj });
-  }));
+  });
 
   return {
     type: null,
