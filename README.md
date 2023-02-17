@@ -1,13 +1,9 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# Projeto Trybe - Módulo de Back-End
+## Store Manager
+### Arquitetura de Software em camadas utilizando Node.Js
+### :construction: README customizado em construção ! :construction:
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+Neste projeto a **Trybe** propôs a criação de uma API REST de gerenciamento de vendas. O foco principal era consolidar o aprendizado de arquitetura em camadas (MSC - Model, Service e Controller) para receber requisições e se comunicar com um banco de dados MySQL.
+Como parte do projeto a **Trybe** já disponibilizou os arquivos _.sql_ responsáveis pela criação e por popular o banco de dados, bem como a estrutura de composição dos _containers_ docker.
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+Para desenvolver esse projeto, optei por utilizar TDD (_test driven development_), garantindo que novas implementações e ajustes de código manteriam a API funcionando como esperado.
